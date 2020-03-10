@@ -7,6 +7,8 @@ const mongoose = require('mongoose') //get module and load mongoose
 //for handlebars of virables 
 const exphbs = require('express-handlebars')
 
+
+
 //isntall handlbars express module 
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -20,23 +22,27 @@ mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true, useUnified
 
 //cause  my mongoose have already to connet and start mongoose  , so  it could be get object connection now 
 const db = mongoose.connection  //through this variable could be stored the status of connection . 
-
 db.on('error', () => { console.log('Your Mongodb Error ') }) //listen to status of connection , if have apper Error . 
 
 db.once('open', () => { console.log('mongodb open Barry') })//listen only onece time on status of connection , also touch off soon , When event Error happend .  
 
 //loading todo //
 
-const Todo = require('./models/todo.js')
+const Todo = require('./models/todo')
 
 // ./ 表示同層的意思 //  那麼   ./TODO/models/too.js 和  ./models/too.js  
 
-//setting Routting // 
+//setting Routting Homepage //
 
 app.get('/', (req, res) => {
-  return res.render('index')      // is mean  to  here , also stop executing programent 
-  //res.send(' Test respone MongoDB create project ')
-
+  Todo.find()
+    //Todo is modle form todo.js , you have see Mongoose ( 'Todo', todoschema) and find() inside no any paramas ,that mean all date  checkout 
+    .lean()     // convert Date to js file 
+    .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來 ( execut)
+      if (err) return console.error(err)
+      return res.render('index', { todos: todos })      // is mean read to  here , also stop executing programent 
+      //res.send(' Test respone MongoDB create project ')
+    })
 })
 
 //=====================================CRUD ROUTE ================================================
@@ -46,6 +52,7 @@ app.get('/', (req, res) => {
 // ...
 // 設定路由
 // Todo 首頁
+
 app.get('/', (req, res) => {
   res.send('hello world!')
 })
@@ -84,3 +91,5 @@ app.post('/todos/:id/delete', (req, res) => {
 //setting listen 
 
 app.listen(port, () => { console.log('app is runging') })
+
+
