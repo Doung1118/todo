@@ -35,7 +35,7 @@ const Todo = require('./models/todo.js')
 
 app.get('/', (req, res) => {
   return res.render('index')      // is mean  to  here , also stop executing programent 
-  res.send(' Test respone MongoDB create project ')
+  //res.send(' Test respone MongoDB create project ')
 
 })
 
