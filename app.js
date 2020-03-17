@@ -12,9 +12,11 @@ const exphbs = require('express-handlebars')
 // 引用 express-handlebars
 // ...
 // 引用 body-parser
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 // 設定 bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
+
+
 // ...
 
 
@@ -40,9 +42,12 @@ const Todo = require('./models/todo')
 
 // ./ 表示同層的意思 //  那麼   ./TODO/models/too.js 和  ./models/too.js  
 
+
+
+
+//設定路由
+//Todo首頁 
 //setting Routting Homepage //
-
-
 app.get('/', (req, res) => {
   Todo.find()
     .lean()
@@ -71,25 +76,33 @@ app.get('/', (req, res) => {
 // app.js
 // 載入 Todo model 
 // ...
+
+
 // 設定路由
 // Todo 首頁
-
 /*app.get('/', (req, res) => {
-
   res.send('hello world!')
 }) */
 
-// 3/17 新增 設定路由 get /todos have redirect to " / " is mean 
+// 3/17 新增 
+//設定路由 
+// get /todos have redirect to " / " is mean 
 /*這樣一來，無論輸入 localhost:3000/ 還是 localhost:3000/todos，最後都會去執行 GET / 裡的內容。*/
+
+
+
+
+/* 列出全部 Todo
+app.get('/todos', (req, res) => {
+  res.send('列出所有 Todo')
+}) */
+
+//3/17 更新上面的
+//列出全部Todo 
 app.get('/todos', (req, res) => {
   return res.redirect('/')
 })
 
-
-// 列出全部 Todo
-app.get('/todos', (req, res) => {
-  res.send('列出所有 Todo')
-})
 
 
 //新增一筆 Todo 頁面 
@@ -110,22 +123,24 @@ app.get('/todos/:id', (req, res) => {
   res.send('顯示 Todo 的詳細內容')
 })
 // 新增一筆  Todo
+//app.post('/todos', (req, res) => {
+//res.send('建立 Todo') 
+// 3/17 新增
 app.post('/todos', (req, res) => {
-  //res.send('建立 Todo') 
-  // 3/17 新增
-  app.post('/todos', (req, res) => {
-    // 建立 Todo model 實例
-    const todo = new Todo({
-      name: req.body.name    // name 是從 new 頁面 form 傳過來
-    })
-    // 存入資料庫
-    todo.save(err => {
-      if (err) return console.error(err)
-      return res.redirect('/')  // 新增完成後，將使用者導回首頁
-    })
-  })
 
+
+  // 建立 Todo model 實例
+  const todo = new Todo({
+    name: req.body.name    // name 是從 new 頁面 form 傳過來
+  })
+  // 存入資料庫
+  todo.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')  // 新增完成後，將使用者導回首頁
+  })
 })
+
+
 // 修改 Todo 頁面
 app.get('/todos/:id/edit', (req, res) => {
   res.send('修改 Todo 頁面')
