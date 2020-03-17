@@ -21,7 +21,11 @@
     <!--<a href="#">detail</a> ._id 是mongoose 特別專用認定慣例id方式-->
     <a href="/todos/{{{this._id}}}/edit">edit</a>
     <!--<a href="#">edit</a> -->
-    <button type="submit">delete</button>
+
+    <form action="/todos/{{{this._id}}}/delete" method="POST" style="display: inline;">
+      <button type="submit">delete</button>
+    </form>
+    <!--<button type="submit">delete</button> -->
   </li>
   {{/each}}
 </ul>
