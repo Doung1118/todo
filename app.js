@@ -8,13 +8,10 @@ const mongoose = require('mongoose') //get module and load mongoose
 const exphbs = require('express-handlebars')
 
 
-
 //isntall handlbars express module 
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-
-
 
 
 //setting connect MongoDB//  ==>  mongoose.connect('mongodb://[資料庫帳號]:[資料庫密碼]@[MongoDB位置]:[port]/[資料庫名稱]')
@@ -35,6 +32,9 @@ const Todo = require('./models/todo')
 //setting Routting Homepage //
 
 app.get('/', (req, res) => {
+
+  return res.render('index')   // 3/17 新增 
+
   Todo.find()
     //Todo is modle form todo.js , you have see Mongoose ( 'Todo', todoschema) and find() inside no any paramas ,that mean all date  checkout 
     .lean()     // convert Date to js file 
