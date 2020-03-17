@@ -118,10 +118,27 @@ app.get('/todos/new', (req, res) => {
   res.send('新增 Todo 頁面')
 })*/
 
+
+
+// 顯示一筆 Todo 的詳細內容
+/*app.get('/todos/:id', (req, res) => {
+  res.send('顯示 Todo 的詳細內容')
+})*/
+
+//3/17 修正
 // 顯示一筆 Todo 的詳細內容
 app.get('/todos/:id', (req, res) => {
-  res.send('顯示 Todo 的詳細內容')
+  Todo.findById(req.params.id)
+    .lean()
+    .exec((err, todo) => {
+      if (err) return console.error(err)
+      return res.render('detail', { todo: todo })
+    })
 })
+
+
+
+
 // 新增一筆  Todo
 //app.post('/todos', (req, res) => {
 //res.send('建立 Todo') 
@@ -145,6 +162,11 @@ app.post('/todos', (req, res) => {
 app.get('/todos/:id/edit', (req, res) => {
   res.send('修改 Todo 頁面')
 })
+
+
+
+
+// ...
 // 修改 Todo
 app.post('/todos/:id/edit', (req, res) => {
   res.send('修改 Todo')

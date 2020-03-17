@@ -17,7 +17,8 @@
   {{#each todos}}
   <li>
     {{{this.name}}}
-    <a href="#">detail</a>
+    <a href="/todos/{{{this._id}}}">detail</a>
+    <!--<a href="#">detail</a> ._id 是mongoose 特別專用認定慣例id方式-->
     <a href="#">edit</a>
     <button type="submit">delete</button>
   </li>
