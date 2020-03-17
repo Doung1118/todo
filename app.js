@@ -33,7 +33,7 @@ const Todo = require('./models/todo')
 
 app.get('/', (req, res) => {
 
-  return res.render('index')   // 3/17 新增 
+  return res.render('index')   // 3/17 新增  下面會反灰是因為讀取到這邊return 表示已經結束了,不會再往下去讀取
 
   Todo.find()
     //Todo is modle form todo.js , you have see Mongoose ( 'Todo', todoschema) and find() inside no any paramas ,that mean all date  checkout 
