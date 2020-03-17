@@ -31,7 +31,17 @@ const Todo = require('./models/todo')
 
 //setting Routting Homepage //
 
+
 app.get('/', (req, res) => {
+  Todo.find()
+    .lean()
+    .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來
+      if (err) return console.error(err)
+      return res.render('index', { todos: todos }) // 將資料傳給 index 樣板
+    })
+})
+
+/* app.get('/', (req, res) => {
 
   return res.render('index')   // 3/17 新增  下面會反灰是因為讀取到這邊return 表示已經結束了,不會再往下去讀取
 
@@ -43,7 +53,7 @@ app.get('/', (req, res) => {
       return res.render('index', { todos: todos })      // is mean read to  here , also stop executing programent 
       //res.send(' Test respone MongoDB create project ')
     })
-})
+}) */
 
 //=====================================CRUD ROUTE ================================================
 // ##  After Todo model //  and  // ##  before listen port //
