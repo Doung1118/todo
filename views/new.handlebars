@@ -1,6 +1,13 @@
 <!-- ./views/new.handlebars   根據 UI 設定，頁面裡只有一個輸入框、一個按鈕：-->
 <form action="/todos" method="POST">
-  <!-- mean you have send request in Html . use <form action='' method=""> -->
+  <!-- mean you have send request in Html . use <form action='' method=""> 
+    很重要
+    import: name = "name"  when you create name : barry 
+    
+    <!- it have to Express module , also package it object of  "req.body{name : 'barry'}"-->
+
   <input type="text" placeholder="name" name="name">
+
+
   <button type="submit">Create</button>
 </form>

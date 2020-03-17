@@ -8,6 +8,17 @@ const mongoose = require('mongoose') //get module and load mongoose
 const exphbs = require('express-handlebars')
 
 
+//  3/17 18:50 add app.js
+// 引用 express-handlebars
+// ...
+// 引用 body-parser
+const bodyParser = require('body-parser');
+// 設定 bodyParser
+app.use(bodyParser.urlencoded({ extended: true }));
+// ...
+
+
+
 //isntall handlbars express module 
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -63,11 +74,10 @@ app.get('/', (req, res) => {
 // 設定路由
 // Todo 首頁
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
 
   res.send('hello world!')
-})
-
+}) */
 
 // 3/17 新增 設定路由 get /todos have redirect to " / " is mean 
 /*這樣一來，無論輸入 localhost:3000/ 還是 localhost:3000/todos，最後都會去執行 GET / 裡的內容。*/
@@ -80,19 +90,15 @@ app.get('/todos', (req, res) => {
 app.get('/todos', (req, res) => {
   res.send('列出所有 Todo')
 })
-// 新增一筆 Todo 頁面 
 
-// 3/17 新增修改後
-app.post('/todos', (req, res) => {
-  // 建立 Todo model 實例
-  const todo = new Todo({
-    name: req.body.name,    // name 是從 new 頁面 form 傳過來
-  })
-  // 存入資料庫
-  todo.save(err => {
-    if (err) return console.error(err)
-    return res.redirect('/')  // 新增完成後，將使用者導回首頁
-  })
+
+//新增一筆 Todo 頁面 
+//3/17 
+//這條路由的工作內容只有一行程式碼，叫 view 引摮去拿 new 樣板，所以接下來要把 new 樣板做好。  
+// you cloud be go back _ homepage and than click " create " button to new.handlebars
+
+app.get('/todos/new', (req, res) => {
+  return res.render('new')
 })
 
 /* app.get('/todos/new', (req, res) => {
@@ -105,7 +111,20 @@ app.get('/todos/:id', (req, res) => {
 })
 // 新增一筆  Todo
 app.post('/todos', (req, res) => {
-  res.send('建立 Todo')
+  //res.send('建立 Todo') 
+  // 3/17 新增
+  app.post('/todos', (req, res) => {
+    // 建立 Todo model 實例
+    const todo = new Todo({
+      name: req.body.name    // name 是從 new 頁面 form 傳過來
+    })
+    // 存入資料庫
+    todo.save(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')  // 新增完成後，將使用者導回首頁
+    })
+  })
+
 })
 // 修改 Todo 頁面
 app.get('/todos/:id/edit', (req, res) => {
