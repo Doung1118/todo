@@ -19,7 +19,8 @@
     {{{this.name}}}
     <a href="/todos/{{{this._id}}}">detail</a>
     <!--<a href="#">detail</a> ._id 是mongoose 特別專用認定慣例id方式-->
-    <a href="#">edit</a>
+    <a href="/todos/{{{this._id}}}/edit">edit</a>
+    <!--<a href="#">edit</a> -->
     <button type="submit">delete</button>
   </li>
   {{/each}}
