@@ -64,16 +64,41 @@ app.get('/', (req, res) => {
 // Todo 首頁
 
 app.get('/', (req, res) => {
+
   res.send('hello world!')
 })
+
+
+// 3/17 新增 設定路由 get /todos have redirect to " / " is mean 
+/*這樣一來，無論輸入 localhost:3000/ 還是 localhost:3000/todos，最後都會去執行 GET / 裡的內容。*/
+app.get('/todos', (req, res) => {
+  return res.redirect('/')
+})
+
+
 // 列出全部 Todo
 app.get('/todos', (req, res) => {
   res.send('列出所有 Todo')
 })
-// 新增一筆 Todo 頁面
-app.get('/todos/new', (req, res) => {
-  res.send('新增 Todo 頁面')
+// 新增一筆 Todo 頁面 
+
+// 3/17 新增修改後
+app.post('/todos', (req, res) => {
+  // 建立 Todo model 實例
+  const todo = new Todo({
+    name: req.body.name,    // name 是從 new 頁面 form 傳過來
+  })
+  // 存入資料庫
+  todo.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')  // 新增完成後，將使用者導回首頁
+  })
 })
+
+/* app.get('/todos/new', (req, res) => {
+  res.send('新增 Todo 頁面')
+})*/
+
 // 顯示一筆 Todo 的詳細內容
 app.get('/todos/:id', (req, res) => {
   res.send('顯示 Todo 的詳細內容')

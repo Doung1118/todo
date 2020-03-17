@@ -1,2 +1,25 @@
-<!-- ./views/index.handlebars -->
-<h2>hello world! 這是 index!</h2>
+<!-- ./views/index.handlebars 
+<h2>hello world! 這是 index!</h2>  -->
+
+
+
+
+<!-- ./views/index.handlebars        
+
+ 3/17 新增 供todolist 練習用樣板 
+在這裡，我們使用了 Handlebars 提供的 each 來動態顯示資料，並透過 this.name 來取得每個 todo 的名字。
+
+我印象是迴圈 有空回去瀏覽課程 , 在迴圈-->
+
+<a href="/todos/new">Create</a>
+
+<ul>
+  {{#each todos}}
+  <li>
+    {{{this.name}}}
+    <a href="#">detail</a>
+    <a href="#">edit</a>
+    <button type="submit">delete</button>
+  </li>
+  {{/each}}
+</ul>
