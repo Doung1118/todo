@@ -3,6 +3,9 @@ const app = express()                    // build express instance
 const port = 3000
 const mongoose = require('mongoose') //get module and load mongoose 
 
+// 3/20 新增method-overrid for Edit and Delete of route ,  conform RESTful rule 
+//could be follow Npm 
+const methodOverride = require('method-override')
 
 //for handlebars of virables 
 const exphbs = require('express-handlebars')
@@ -15,9 +18,15 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 // 設定 bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
-
-
 // ...
+
+
+//3/20 
+app.use(methodOverride('_method'))
+
+
+
+
 
 
 
@@ -50,6 +59,7 @@ const Todo = require('./models/todo')
 //setting Routting Homepage //
 app.get('/', (req, res) => {
   Todo.find()
+    .sort({ name: 'asc' }) // 3/20 新增排序功能 sort 
     .lean()
     .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來
       if (err) return console.error(err)
@@ -185,7 +195,7 @@ app.post('/todos/:id/edit', (req, res) => {
 //3/17 新增
 // app.js
 // 修改 Todo
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id/edit', (req, res) => {
   Todo.findById(req.params.id, (err, todo) => {
     if (err) return console.error(err)
     todo.name = req.body.name
@@ -196,7 +206,6 @@ app.post('/todos/:id/edit', (req, res) => {
   })
 })
 
-
 /* // 刪除 Todo
 app.post('/todos/:id/delete', (req, res) => {
   res.send('刪除 Todo')
@@ -204,7 +213,7 @@ app.post('/todos/:id/delete', (req, res) => {
 
 //3/17 新增
 // 刪除 Todo
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id/delete', (req, res) => {
   Todo.findById(req.params.id, (err, todo) => {
     if (err) return console.error(err)
     todo.remove(err => {
@@ -213,6 +222,20 @@ app.post('/todos/:id/delete', (req, res) => {
     })
   })
 })
+
+
+
+
+/*3/20 新增
+// 載入路由器
+//跟建立 todo 路由器時一樣，現在我們要在 app.js 把剛剛新增的 user 路由器加進來。
+
+app.use('/', require('./routes/home'))
+app.use('/todos', require('./routes/todo'))
+app.use('/users', require('./routes/user'))        // 新增的 user 路由器 
+// 設定 express port 3000  */
+// ...
+
 
 // 設定 express port 3000
 // ...
