@@ -11,15 +11,10 @@ const methodOverride = require('method-override')
 const exphbs = require('express-handlebars')
 
 
-//  3/17 18:50 add app.js
-// 引用 express-handlebars
-// ...
 // 引用 body-parser
 const bodyParser = require('body-parser')
 // 設定 bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
-// ...
-
 
 //3/20 
 app.use(methodOverride('_method'))
