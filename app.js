@@ -25,11 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 
-
-
-
-
-
 //isntall handlbars express module 
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -54,191 +49,18 @@ const Todo = require('./models/todo')
 
 
 
-//設定路由
-//Todo首頁 
-//setting Routting Homepage //
-app.get('/', (req, res) => {
-  Todo.find()
-    .sort({ name: 'asc' }) // 3/20 新增排序功能 sort 
-    .lean()
-    .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來
-      if (err) return console.error(err)
-      return res.render('index', { todos: todos }) // 將資料傳給 index 樣板
-    })
-})
-
-/* app.get('/', (req, res) => {
-
-  return res.render('index')   // 3/17 新增  下面會反灰是因為讀取到這邊return 表示已經結束了,不會再往下去讀取
-
-  Todo.find()
-    //Todo is modle form todo.js , you have see Mongoose ( 'Todo', todoschema) and find() inside no any paramas ,that mean all date  checkout 
-    .lean()     // convert Date to js file 
-    .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來 ( execut)
-      if (err) return console.error(err)
-      return res.render('index', { todos: todos })      // is mean read to  here , also stop executing programent 
-      //res.send(' Test respone MongoDB create project ')
-    })
-}) */
-
-//=====================================CRUD ROUTE ================================================
-// ##  After Todo model //  and  // ##  before listen port //
-// app.js
-// 載入 Todo model 
-// ...
-
-
-// 設定路由
-// Todo 首頁
-/*app.get('/', (req, res) => {
-  res.send('hello world!')
-}) */
-
-// 3/17 新增 
-//設定路由 
-// get /todos have redirect to " / " is mean 
-/*這樣一來，無論輸入 localhost:3000/ 還是 localhost:3000/todos，最後都會去執行 GET / 裡的內容。*/
 
 
 
-
-/* 列出全部 Todo
-app.get('/todos', (req, res) => {
-  res.send('列出所有 Todo')
-}) */
-
-//3/17 更新上面的
-//列出全部Todo 
-app.get('/todos', (req, res) => {
-  return res.redirect('/')
-})
-
-
-
-//新增一筆 Todo 頁面 
-//3/17 
-//這條路由的工作內容只有一行程式碼，叫 view 引摮去拿 new 樣板，所以接下來要把 new 樣板做好。  
-// you cloud be go back _ homepage and than click " create " button to new.handlebars
-
-app.get('/todos/new', (req, res) => {
-  return res.render('new')
-})
-
-/* app.get('/todos/new', (req, res) => {
-  res.send('新增 Todo 頁面')
-})*/
-
-
-
-// 顯示一筆 Todo 的詳細內容
-/*app.get('/todos/:id', (req, res) => {
-  res.send('顯示 Todo 的詳細內容')
-})*/
-
-//3/17 修正
-// 顯示一筆 Todo 的詳細內容
-app.get('/todos/:id', (req, res) => {
-  Todo.findById(req.params.id)
-    .lean()
-    .exec((err, todo) => {
-      if (err) return console.error(err)
-      return res.render('detail', { todo: todo })
-    })
-})
-
-
-
-// 新增一筆  Todo
-//app.post('/todos', (req, res) => {
-//res.send('建立 Todo') 
-// 3/17 新增
-app.post('/todos', (req, res) => {
-
-
-  // 建立 Todo model 實例
-  const todo = new Todo({
-    name: req.body.name    // name 是從 new 頁面 form 傳過來
-  })
-  // 存入資料庫
-  todo.save(err => {
-    if (err) return console.error(err)
-    return res.redirect('/')  // 新增完成後，將使用者導回首頁
-  })
-})
-
-
-// 修改 Todo 頁面 
-/*app.get('/todos/:id/edit', (req, res) => {
-  res.send('修改 Todo 頁面')
-})  */
-
-//3/17 新增
-// 修改 Todo 頁面
-app.get('/todos/:id/edit', (req, res) => {
-  Todo.findById(req.params.id)
-    .lean()
-    .exec((err, todo) => {
-      if (err) return console.error(err)
-      return res.render('edit', { todo: todo })
-    })
-})
-
-
-
-
-/* ...
-// 修改 Todo
-app.post('/todos/:id/edit', (req, res) => {
-  res.send('修改 Todo') 
-})   */
-
-//3/17 新增
-// app.js
-// 修改 Todo
-app.put('/todos/:id/edit', (req, res) => {
-  Todo.findById(req.params.id, (err, todo) => {
-    if (err) return console.error(err)
-    todo.name = req.body.name
-    todo.save(err => {
-      if (err) return console.error(err)
-      return res.redirect(`/todos/${req.params.id}`)
-    })
-  })
-})
-
-/* // 刪除 Todo
-app.post('/todos/:id/delete', (req, res) => {
-  res.send('刪除 Todo')
-})  */
-
-//3/17 新增
-// 刪除 Todo
-app.delete('/todos/:id/delete', (req, res) => {
-  Todo.findById(req.params.id, (err, todo) => {
-    if (err) return console.error(err)
-    todo.remove(err => {
-      if (err) return console.error(err)
-      return res.redirect('/')
-    })
-  })
-})
-
-
-
-
-/*3/20 新增
 // 載入路由器
-//跟建立 todo 路由器時一樣，現在我們要在 app.js 把剛剛新增的 user 路由器加進來。
+
+
 
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todo'))
-app.use('/users', require('./routes/user'))        // 新增的 user 路由器 
-// 設定 express port 3000  */
-// ...
 
 
-// 設定 express port 3000
-// ...
+
 //=================================================================================================
 
 //setting listen 
