@@ -40,21 +40,11 @@ db.once('open', () => { console.log('mongodb open Barry') })//listen only onece 
 const Todo = require('./models/todo')
 
 // ./ 表示同層的意思 //  那麼   ./TODO/models/too.js 和  ./models/too.js  
-
-
-
-
-
-
-
 // 載入路由器
-
-
 
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todo'))
-
-
+app.use('/users', require('./routes/user'))
 
 //=================================================================================================
 
