@@ -1,6 +1,60 @@
-<!-- ./views/edit.handlebars -->
+{{!-- <!-- ./views/layouts/detail.handlebars -->
+<form action="/todos/{{{todo._id}}}/delete?_method=DELETE" method="post" style="display:inline">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input type="checkbox" name="done" {{#if todo.done }} checked{{/if}} disabled />
+      </div>
+    </div>
+    <input type="text" placeholder="name" name="name" value="{{{todo.name}}}" class="form-control" disabled>
+    <div class="input-group-append">
+      <a href="/todos/{{{todo._id}}}/edit" class="btn btn-success">edit</a>
+      <button type="submit" class="btn btn-danger">delete</button>
+    </div>
+  </div>
+</form>
+ --}}
+
+
+{{!-- <!-- ./views/edit.handlebars -->
 <form action="/todos/{{{todo._id}}}?_method=PUT" method="POST">
   <input type="checkbox" name="done" {{#if todo.done}} checked{{/if}} />
   <input type="text" placeholder="name" name="name" value="{{{todo.name}}}">
   <button type="submit">Edit</button>
+</form> --}}
+
+
+<!-- ./views/edit.handlebars -->
+<form action="/todos/{{{todo._id}}}?_method=PUT" method="POST">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input type="checkbox" name="done" {{#if todo.done}} checked{{/if}} />
+      </div>
+    </div>
+
+    <input type="text" placeholder="name" name="name" value="{{{todo.name}}}">
+
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-info">Edit</button>
+    </div>
+  </div>
 </form>
+
+
+
+{{!-- 
+<!-- ./views/layouts/edit.handlebars -->
+<form action="/todos/{{{todo._id}}}?_method=PUT" method="POST">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input type="checkbox" name="done" {{#if todo.done }} checked{{/if}} />
+      </div>
+    </div>
+    <input type="text" placeholder="name" name="name" value="{{{todo.name}}}" class="form-control">
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-success">Edit</button>
+    </div>
+  </div>
+</form> --}}
