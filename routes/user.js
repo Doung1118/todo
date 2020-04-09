@@ -1,10 +1,4 @@
-// route /user.js 
 
-const express = require('express')
-//loading modele of express 
-
-
-const router = express.Router()
 // Router 是 express 內的功能 
 
 // routes/user.js
