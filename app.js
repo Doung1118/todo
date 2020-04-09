@@ -10,6 +10,8 @@ const methodOverride = require('method-override')
 //for handlebars of virables 
 const exphbs = require('express-handlebars')
 
+const session = require('express-session')
+
 
 // 引用 body-parser
 const bodyParser = require('body-parser')
@@ -18,6 +20,22 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //3/20 
 app.use(methodOverride('_method'))
+
+
+
+// inital session 
+
+//app.use(session())  
+
+//很有意思 
+
+app.use(session({
+  secret: ' your key ',
+  resave: true,
+  saveUninitialized: true,
+}))
+
+
 
 
 //isntall handlbars express module 
