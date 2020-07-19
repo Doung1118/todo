@@ -23,7 +23,27 @@ app.use(methodOverride('_method'))
 
 
 
+//./app.js
 // inital session 
+
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+app.use(express.bodyParser());
+app.use(express.session({ secret: 'keyboard cat' }));
+// passport
+app.use(passport.initialize())
+app.use(passport.session())
+// routes
+app.use('/', index)
+// catch 404 and forward to error handler
+app.use(function (req, res, next) { })
+// error handler
+app.use(function (err, req, res, next) { })
+module.exports = app
+
+
+
+
 
 //app.use(session())  
 
@@ -35,6 +55,7 @@ app.use(session({
   saveUninitialized: true,
 }))
 
+// secret , resave  ,saveUninitialized  ,如果沒有設定, when you run app.js , have apper ' notice . suggust you use it . more security // 
 
 
 
